@@ -41,6 +41,7 @@ THEN I am presented with empty fields to enter a new note title and the note’s
 ## Built With
 Express.js
 Node.js
+Heroku CLI
 
 ## Author
 **Samantha Guerra**
