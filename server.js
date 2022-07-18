@@ -70,6 +70,10 @@ app.get('/', (req, res) => {
 app.get('/notes', (req, res) => {
   res.sendFile(path.join(__dirname, './public/notes.html'));
 });
+// Wildcard route (if anything other than the above is entered as a route, it will go to index.html)
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/index.html'));
+});
 // LISTEN request for the server 
 app.listen(PORT, () => {
   console.log(`API server now on ${PORT}.`);
