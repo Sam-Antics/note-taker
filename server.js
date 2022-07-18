@@ -6,6 +6,8 @@ const path = require('path');
 app.use(express.urlencoded({ extended: true }));
 // parse incoming JSON data
 app.use(express.json());
+// get all the assets for the HTML to load properly
+app.use(express.static('public'));
 const PORT = process.env.PORT || 3001;
 const { notes } = require('./db/db.json');
 
@@ -60,6 +62,10 @@ app.post('/api/notes', (req, res) => {
   const note = createNewNote(req.body, notes);
   res.json(note);
   }
+});
+// GET route for index.html
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/index.html'));
 });
 // LISTEN request for the server 
 app.listen(PORT, () => {
