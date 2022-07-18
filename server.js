@@ -27,20 +27,39 @@ function createNewNote(body, notesArray){
   return note;
 }
 
-// GET request api call
+// validate the data coming in
+function validateNote(note) {
+  if (!note.title || typeof note.title !== 'string') {
+    return false;
+  }
+  if (!note.text || typeof note.text !== 'string') {
+    return false;
+  } 
+  return true;
+}
+
+
+
+
+/**API ROUTES **/
+// GET request api route
 app.get('/api/notes', (req, res) => {
   res.json(notes);
 });
-// POST request api call
+// POST request api route
 app.post('/api/notes', (req, res) => {
   // setting an auto-generated ID based on the length property so that notes can be 
   // distinguised on the server (change later when dealing with DELETE requests)
   req.body.id = notes.length.toString();
 
+  // if any data is incorrect, send 400 error back
+  if (!validateNote(req.body)) {
+    res.status(400).send('The note is not properly formatted.');
+  } else {
   // add note to the json file and notes array
   const note = createNewNote(req.body, notes);
-
   res.json(note);
+  }
 });
 // LISTEN request for the server 
 app.listen(PORT, () => {
